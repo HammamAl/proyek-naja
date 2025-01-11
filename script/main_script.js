@@ -17,18 +17,18 @@ document.addEventListener("DOMContentLoaded", function () {
   const gallery = document.querySelector(".gallery-container");
 
   let images = [
-    { src: "/img/cewekpink1.jpg", alt: "Image 1" },
-    { src: "/img/cewekpink2.jpg", alt: "Image 2" },
-    { src: "/img/cewekpink3.jpg", alt: "Image 3" },
-    { src: "/img/cewekpink4.jpg", alt: "Image 4" },
-    { src: "/img/cewekpink5.jpg", alt: "Image 5" },
-    { src: "/img/cewekpink6.jpg", alt: "Image 6" },
-    { src: "/img/cewekpink7.jpg", alt: "Image 7" },
-    { src: "/img/cewekputih1.jpg", alt: "Image 8" },
-    { src: "/img/cewekputih2.jpg", alt: "Image 9" },
-    { src: "/img/cewekputih3.jpg", alt: "Image 10" },
-    { src: "/img/cewekputih4.jpg", alt: "Image 11" },
-    { src: "/img/cewekputih5.jpg", alt: "Image 12" },
+    { src: "img/cewekpink1.jpg", alt: "Image 1" },
+    { src: "img/cewekpink2.jpg", alt: "Image 2" },
+    { src: "img/cewekpink3.jpg", alt: "Image 3" },
+    { src: "img/cewekpink4.jpg", alt: "Image 4" },
+    { src: "img/cewekpink5.jpg", alt: "Image 5" },
+    { src: "img/cewekpink6.jpg", alt: "Image 6" },
+    { src: "img/cewekpink7.jpg", alt: "Image 7" },
+    { src: "img/cewekputih1.jpg", alt: "Image 8" },
+    { src: "img/cewekputih2.jpg", alt: "Image 9" },
+    { src: "img/cewekputih3.jpg", alt: "Image 10" },
+    { src: "img/cewekputih4.jpg", alt: "Image 11" },
+    { src: "img/cewekputih5.jpg", alt: "Image 12" },
   ];
 
   function shuffleArray(array) {
