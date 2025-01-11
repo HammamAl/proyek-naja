@@ -209,3 +209,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+// Tambahkan console log
+images.forEach((img) => {
+  console.log("Loading image:", img.src);
+});
