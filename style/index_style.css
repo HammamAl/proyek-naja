@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=News+Cycle:wght@400;700&display=swap");
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: "News Cycle", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.background-image {
+  background-image: url("../img/klenteng7.jpg"); /* replace with your image path */
+  height: 100%;
+  background-position: center;
+  position: relative;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+}
+.background-image::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3); /* Adjust the last number to set darkness level */
+  z-index: 1;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+.link-text {
+  text-decoration: none;
+  letter-spacing: 2px;
+  font-size: 3rem;
+  text-align: center;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  z-index: 2;
+}
+
+.link-text-second {
+  text-decoration: none;
+  font-size: 1.8rem;
+  text-align: center;
+  cursor: pointer;
+  color: aliceblue;
+  z-index: 2;
+}
