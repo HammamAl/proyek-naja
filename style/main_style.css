@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-html,
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   padding: 0;
   height: 100vh;
   width: 100%;
-
   overflow: hidden; /* Mencegah scroll di body */
   display: flex;
   font-family: "Poppins", serif;
@@ -14,6 +17,7 @@ body {
   background-color: #fff;
   display: flex; /* Tambahkan display flex */
   min-height: 100vh;
+  position: relative;
 }
 
 .sidebar {
@@ -66,9 +70,17 @@ body {
   cursor: pointer;
 }
 
-.sidebar a {
+.sidebar-nav {
+  margin-top: 15px;
+}
+
+.sidebar-nav a {
+  display: block;
+  padding: 5px 0;
+  color: #333;
   text-decoration: none;
-  color: #666;
+  font-size: 16px;
+  transition: color 0.3s ease;
 }
 
 /* Hover effect */
@@ -87,16 +99,6 @@ body {
   cursor: pointer;
 }
 
-/* For smaller screens */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 200px;
-  }
-  .main-content {
-    margin-left: 220px;
-  }
-}
-
 .sidebar {
   width: 250px;
   height: 100vh;
@@ -109,7 +111,45 @@ body {
   /* Tambahkan ini */
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  z-index: 999;
+  transition: transform 0.3s ease;
 }
+
+/* Hamburger Menu Styles */
+.hamburger {
+  display: none; /* Hidden by default on desktop */
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.hamburger-line {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px 0;
+  background-color: #333;
+  transition: 0.3s;
+}
+
+/* Overlay */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
 /* Tambahkan style untuk menu yang disembunyikan */
 .hidden {
   display: none;
@@ -157,43 +197,38 @@ main {
   height: 100vh; /* Full height viewport */
   overflow-y: auto; /* Scroll hanya di main content */
   overflow-x: hidden;
+  transition: margin-left 0.3s ease;
 }
-
 .gallery-container {
   display: grid;
-  grid-template-columns: repeat(3, minmax(290px, 2fr));
-  gap: 12px;
-  padding: 15px;
-  max-width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
   margin: 0 auto;
-  box-sizing: border-box;
 }
 
 .photo {
-  position: relative;
-  border-radius: 12px;
-  background-color: #fff;
-  padding: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  grid-column: span 1;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-/* Mengatur rasio aspek yang konsisten */
+.photo.landscape {
+  grid-column: span 2;
+  aspect-ratio: 2/1;
+}
+
 .photo-wrapper {
-  position: relative;
   width: 100%;
+  height: 100%;
+  position: relative;
   overflow: hidden;
-  border-radius: 8px;
-}
-
-/* Rasio untuk foto portrait (3:4) */
-.portrait .photo-wrapper {
-  padding-bottom: 133.33%; /* (4/3 * 100%) */
-}
-
-/* Rasio untuk foto landscape (4:3) */
-.landscape .photo-wrapper {
-  padding-bottom: 75%; /* (3/4 * 100%) */
 }
 
 .photo img {
@@ -203,51 +238,259 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-/* Grid layout dinamis */
-.photo.large {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.photo.medium {
-  grid-column: span 2;
-}
-
-/* Hover effects */
+/* Hover Effects */
 .photo:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .photo:hover img {
-  transform: scale(1.02);
+  transform: scale(1.1);
+  filter: brightness(1.1);
 }
 
-/* Responsive adjustments */
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: #fff;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.close:hover {
+  color: #ccc;
+}
+
+/* Loading animation */
+.modal-image.loading {
+  opacity: 0;
+}
+
+/* Responsive Design */
 @media (max-width: 1200px) {
   .gallery-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
+  main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Sidebar adjustments */
+  .sidebar {
+    width: 200px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  /* Add hamburger menu */
+  .menu-toggle {
+    display: block;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Main content adjustments */
+  main {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+
   .gallery-container {
     grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
   }
 
-  .photo.large,
-  .photo.medium {
-    grid-column: span 1;
-    grid-row: span 1;
+  /* Modal adjustments */
+  .modal-content {
+    width: 95%;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 576px) {
   .gallery-container {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+
+  .photo,
+  .photo.landscape {
+    grid-column: span 1;
+    aspect-ratio: 1/1;
+  }
+
+  .title h1 {
+    font-size: 18px;
+  }
+
+  .sidebar h2 {
+    font-size: 16px;
+  }
+
+  .sidebar li {
+    font-size: 13px;
+  }
+
+  .modal-image {
+    max-width: 100%;
+    max-height: 80vh;
+  }
+}
+
+/* Tambahan untuk smooth scrolling */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Overlay untuk mobile */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+}
+
+.overlay.active {
+  display: block;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .gallery-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  .title {
+    font-size: 20px;
+    margin-top: 60px;
+    line-height: 1.5;
+    font-weight: bold;
+    letter-spacing: 1px; /* Menambahkan spasi antar huruf sebesar 2px */
+    text-transform: uppercase; /* Optional: membuat huruf kapital */
+    transform: scaleY(1.2);
+    transform: scaleX(1);
+  }
+  .hamburger {
+    display: block;
+    background-color: #ccc;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    background: white;
+    z-index: 999;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .overlay.active {
+    display: block;
+  }
+
+  /* Hamburger Animation */
+  .hamburger.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-container {
+    grid-template-columns: 1fr;
+  }
+
+  .title h1 {
+    font-size: 18px;
+  }
+
+  .sidebar {
+    width: 80%;
+    max-width: 300px;
   }
 }

@@ -8,24 +8,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   </head>
   <body>
-    <div class="sidebar">
+    <!-- Hamburger Menu Button -->
+    <button class="hamburger" aria-label="Menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <div class="sidebar" id="sidebar">
+      <!-- Tambahkan overlay untuk mobile menu -->
       <div class="title">
         <a href="index.html"> <h1>FATIH NAJA KARIEM</h1></a>
         <a href="index.html"><h1>PHOTOGRHAPY</h1></a>
       </div>
-      <a href=""><h2 class="main-gallery">MAIN GALLERY</h2></a>
-      <div class="section">
-        <a href="javascript:void(0)" onclick="toggleMenu()">
-          <h2>GALLERY <i id="arrow" class="fas fa-chevron-up"></i></h2>
-        </a>
-        <ul id="galleryMenu" class="hidden">
-          <li><a href="">MOJANG 1</a></li>
-          <li><a href="">MOJANG 2</a></li>
-          <li><a href="">KLENTENG</a></li>
-        </ul>
+      <div class="sidebar-nav">
+        <a href=""><h2 class="main-gallery">MAIN GALLERY</h2></a>
+        <div class="section">
+          <a href="javascript:void(0)" onclick="toggleMenu()">
+            <h2>GALLERY <i id="arrow" class="fas fa-chevron-up"></i></h2>
+          </a>
+          <ul id="galleryMenu" class="hidden">
+            <li><a href="">MOJANG 1</a></li>
+            <li><a href="">MOJANG 2</a></li>
+            <li><a href="">KLENTENG</a></li>
+          </ul>
+        </div>
+        <a href=""> <h2>BIO</h2></a>
+        <a href=""> <h2>CONTACT</h2></a>
       </div>
-      <a href=""> <h2>BIO</h2></a>
-      <a href=""> <h2>CONTACT</h2></a>
       <div class="social-media">
         <a href="#"><i class="fab fa-facebook"></i></a>
         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -33,61 +43,11 @@
         <a href=""> <i class="fa-brands fa-x-twitter"></i></a>
       </div>
     </div>
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
     <main>
-      <div class="gallery-container">
-        <!-- Untuk gambar portrait -->
-        <div class="photo landscape" data-order="0">
-          <div class="photo-wrapper">
-            <img src="/img/cewekpink3.jpg" alt="Image 3" loading="lazy" />
-          </div>
-        </div>
-        <div class="photo portrait" data-order="1">
-          <div class="photo-wrapper">
-            <img src="/img/cewekpink1.jpg" alt="Image 1" loading="lazy" />
-          </div>
-        </div>
-        <div class="photo portrait" data-order="2">
-          <div class="photo-wrapper">
-            <img src="/img/cewekpink2.jpg" alt="Image 2" loading="lazy" />
-          </div>
-        </div>
-        <div class="photo portrait" data-order="3">
-          <div class="photo-wrapper">
-            <img src="/img/cewekpink4.jpg" alt="Image 4" loading="lazy" />
-          </div>
-        </div>
-        <div class="photo portrait" data-order="4">
-          <div class="photo-wrapper">
-            <img src="/img/cewekpink5.jpg" alt="Image 5" loading="lazy" />
-          </div>
-        </div>
-        <div class="photo portrait" data-order="5">
-          <div class="photo-wrapper">
-            <img src="/img/cewekpink6.jpg" alt="Image 6" loading="lazy" />
-          </div>
-        </div>
-        <div class="photo portrait" data-order="6">
-          <div class="photo-wrapper">
-            <img src="/img/cewekputih1.jpg" alt="Image 6" loading="lazy" />
-          </div>
-        </div>
-        <div class="photo portrait" data-order="7">
-          <div class="photo-wrapper">
-            <img src="/img/cewekputih2.jpg" alt="Image 6" loading="lazy" />
-          </div>
-        </div>
-      </div>
-      <div class="photo portrait" data-order="8">
-        <div class="photo-wrapper">
-          <img src="/img/cewekputih4.jpg" alt="Image 6" loading="lazy" />
-        </div>
-      </div>
-      <div class="photo portrait" data-order="9">
-        <div class="photo-wrapper">
-          <img src="/img/cewekputih5.jpg" alt="Image 6" loading="lazy" />
-        </div>
-      </div>
-    </div>
+      <div class="gallery-container"></div>
     </main>
   </body>
   <script src="/script/main_script.js"></script>
