@@ -2,6 +2,7 @@
 * {
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -21,21 +22,27 @@ body {
 }
 
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 250px;
   height: 100vh;
-  overflow-y: auto;
+  background: #2c2c2c; /* Warna latar sidebar */
+  background-color: #fff;
+  color: #676464;
   padding: 20px;
-  background-color: white;
-  z-index: 100;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-right: 1px solid #eee;
+  /* Tambahkan ini */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 999;
+  transition: transform 0.3s ease;
 }
 
 /* Make text smaller and adjust spacing */
-.sidebar .title {
-  margin-bottom: 40px;
+.title {
+  margin-bottom: 30px;
 }
 
 .sidebar .title a {
@@ -45,7 +52,7 @@ body {
 .title h1 {
   font-size: 20px;
   margin: 0;
-  line-height: 1.5;
+  line-height: 1;
   font-weight: bold;
   letter-spacing: 1px; /* Menambahkan spasi antar huruf sebesar 2px */
   text-transform: uppercase; /* Optional: membuat huruf kapital */
@@ -58,10 +65,16 @@ body {
   font-weight: normal;
 }
 
+.sidebar h2,
+.sidebar h1 {
+  margin: 10px 0;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease; /* Animasi halus */
+}
+
 .sidebar ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 0 25px;
 }
 
 .sidebar li {
@@ -77,43 +90,57 @@ body {
 .sidebar-nav a {
   display: block;
   padding: 5px 0;
-  color: #333;
+  color: inherit;
   text-decoration: none;
   font-size: 16px;
   transition: color 0.3s ease;
 }
-
-/* Hover effect */
-.sidebar li:hover {
-  color: #666;
-}
-
-/* Adjust main content margin */
-.main-content {
-  margin-left: 270px; /* sidebar width + some spacing */
-}
-
-.main-gallery {
-  font-size: 16px;
+.sidebar .main-gallery {
   margin-bottom: 0px;
   cursor: pointer;
 }
 
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  background-color: #fff;
-  padding: 20px;
-  position: fixed;
-  left: 0;
-  top: 0;
-  border-right: 1px solid #eee;
-  /* Tambahkan ini */
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  z-index: 999;
-  transition: transform 0.3s ease;
+/* Animasi saat hover (untuk menu) */
+.sidebar h2:hover {
+  color: #ff6347; /* Ubah warna teks saat hover */
+  transform: scale(1.1); /* Perbesar sedikit teks untuk efek fokus */
+}
+
+/* Animasi hover pada menu utama */
+.sidebar-nav a:hover {
+  color: #ff6347; /* Warna teks berubah */
+  background: rgba(255, 99, 71, 0.1); /* Efek highlight transparan */
+  padding-left: 10px; /* Geser sedikit ke kanan */
+}
+
+/* Navigasi dropdown menu (misalnya ul item) */
+#galleryMenu li a {
+  display: block;
+  margin-left: 20px;
+  text-decoration: none;
+  color: #676464;
+  padding: 5px 0;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover untuk submenu */
+#galleryMenu li a:hover {
+  color: #ff5722;
+  background: rgba(255, 87, 34, 0.1); /* Transisi saat hover */
+  padding-left: 10px; /* Geser sedikit ke kanan */
+}
+
+/* Efek animasi pada ikon sosial media */
+.social-media a {
+  font-size: 20px;
+  color: #fff;
+  margin-right: 10px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-media a:hover {
+  transform: scale(1.3); /* Perbesar ikon */
+  color: #ff4655; /* Warna hover */
 }
 
 /* Hamburger Menu Styles */
@@ -136,6 +163,19 @@ body {
   margin: 5px 0;
   background-color: #333;
   transition: 0.3s;
+}
+
+/* Hamburger "Close" State */
+.hamburger.active .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+  opacity: 0; /* Sembunyikan garis tengah */
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* Overlay */
@@ -205,7 +245,7 @@ main {
   gap: 20px;
   padding: 20px;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 25px auto;
 }
 
 .photo {
@@ -249,7 +289,7 @@ main {
 
 .photo:hover img {
   transform: scale(1.1);
-  filter: brightness(1.1);
+  filter: brightness(0.5);
 }
 
 /* Modal styles */
@@ -318,108 +358,6 @@ main {
     gap: 15px;
     padding: 15px;
   }
-}
-
-@media (max-width: 992px) {
-  main {
-    margin-left: 260px;
-    width: calc(100% - 260px);
-  }
-}
-
-@media (max-width: 768px) {
-  /* Sidebar adjustments */
-  .sidebar {
-    width: 200px;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-
-  .sidebar.active {
-    transform: translateX(0);
-  }
-
-  /* Add hamburger menu */
-  .menu-toggle {
-    display: block;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1001;
-    background: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  /* Main content adjustments */
-  main {
-    margin-left: 0;
-    width: 100%;
-    padding: 15px;
-  }
-
-  .gallery-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 10px;
-  }
-
-  /* Modal adjustments */
-  .modal-content {
-    width: 95%;
-  }
-}
-
-@media (max-width: 576px) {
-  .gallery-container {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .photo,
-  .photo.landscape {
-    grid-column: span 1;
-    aspect-ratio: 1/1;
-  }
-
-  .title h1 {
-    font-size: 18px;
-  }
-
-  .sidebar h2 {
-    font-size: 16px;
-  }
-
-  .sidebar li {
-    font-size: 13px;
-  }
-
-  .modal-image {
-    max-width: 100%;
-    max-height: 80vh;
-  }
-}
-
-/* Tambahan untuk smooth scrolling */
-* {
-  scroll-behavior: smooth;
-}
-
-/* Overlay untuk mobile */
-.overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 99;
-}
-
-.overlay.active {
-  display: block;
 }
 
 /* Responsive styles */
